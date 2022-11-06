@@ -21,25 +21,25 @@
     std.growOn {
       inherit inputs;
       systems = ["aarch64-darwin" "aarch64-linux"];
-      cellsFrom = ./comb;
+      cellsFrom = ./cells;
       cellBlocks = with std.blockTypes; [
         (functions "lib")
 
-        (data "implemae")
-        (data "intervacae")
+        (data "profiles")
+        (data "modules")
 
-        (data "carnai")
-        (data "noduli")
-        (data "domai")
+        (data "hosts")
+        (data "nodes")
+        (data "homes")
 
         (installables "packages")
 
         (devshells "devshells")
       ];
     } {
-      devShells = std.harvest self ["_automat" "devshells"];
-      lib = (std.harvest self ["_automat" "lib"]).${system};
-      nixosConfigurations = (std.harvest self ["arcologies" "carnai"]).${system};
+      devShells = std.harvest self ["_automation" "devshells"];
+      # lib = (std.harvest self ["lib" "lib"]).${system};
+      nixosConfigurations = (std.harvest self ["clusters" "hosts"]).${system};
     };
 
   nixConfig = {

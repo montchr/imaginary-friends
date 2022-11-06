@@ -3,9 +3,9 @@
   cell,
 }: let
   inherit (inputs) cells;
-  inherit (cells) enzymes;
+  inherit (cells) lib;
 in {
-  freundix = enzymes.incarnate {
+  freundix = lib.incarnate {
     system = "aarch64-linux";
     profiles = [
       ./freundix
