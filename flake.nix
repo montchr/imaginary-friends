@@ -15,8 +15,7 @@
     self,
     std,
     ...
-  }:
-  let
+  }: let
     system = builtins.currentSystem or "aarch64-darwin";
   in
     std.growOn {

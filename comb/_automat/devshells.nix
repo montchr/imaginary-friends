@@ -7,15 +7,15 @@
   pkgs' = inputs.nixpkgs;
 in
   l.mapAttrs (_: std.lib.dev.mkShell) rec {
-  ci = {
-    packages = [inputs.nej.packages.nix-eval-jobs];
-    env = [
-      {
-        name = "NIX_CONFIG";
-        value = cell.compat.configCompat;
-      }
-    ];
-  };
+    ci = {
+      packages = [inputs.nej.packages.nix-eval-jobs];
+      env = [
+        {
+          name = "NIX_CONFIG";
+          value = cell.compat.configCompat;
+        }
+      ];
+    };
     default = {...}: {
       name = "Your Imaginary Friends";
       imports = [std.std.devshellProfiles.default];
@@ -34,11 +34,15 @@ in
             category = "legal";
           }
           {
+            package = pkgs'.alejandra;
+            category = "tools";
+          }
+          {
             package = pkgs'.treefmt;
             category = "tools";
           }
         ]
-        ++ l.optionals pkgs'.stdenv.isLinux [ ];
+        ++ l.optionals pkgs'.stdenv.isLinux [];
     };
 
     # checks = {...}: {
