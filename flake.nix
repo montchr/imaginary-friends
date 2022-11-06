@@ -14,7 +14,11 @@
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.colmena.url = "github:zhaofengli/colmena";
+  inputs.colmena.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.nix-eval-jobs.url = "github:nix-community/nix-eval-jobs/v2.11.0";
+  inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   outputs = inputs @ {
     self,
