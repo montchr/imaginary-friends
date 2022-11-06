@@ -65,6 +65,22 @@
         "type": "github"
       }
     },
+    "flake-registry": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1661161594,
+        "narHash": "sha256-tu1KKNLw+v7ZOIUPGDE66tn9vEyhIAWiiJYZRGGev8E=",
+        "owner": "NixOS",
+        "repo": "flake-registry",
+        "rev": "8634fb4e1db6c76ce037bc00ef80f9ebd2616476",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "flake-registry",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1667077288,
@@ -206,6 +222,21 @@
         "type": "github"
       }
     },
+    "nixos": {
+      "locked": {
+        "lastModified": 1667629849,
+        "narHash": "sha256-P+v+nDOFWicM4wziFK9S/ajF2lc0N2Rg9p6Y35uMoZI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3bacde6273b09a21a8ccfba15586fb165078fb62",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1667050928,
@@ -213,22 +244,6 @@
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "fdebb81f45a1ba2c4afca5fd9f526e1653ad0949",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1667629849,
-        "narHash": "sha256-P+v+nDOFWicM4wziFK9S/ajF2lc0N2Rg9p6Y35uMoZI=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3bacde6273b09a21a8ccfba15586fb165078fb62",
         "type": "github"
       },
       "original": {
@@ -255,9 +270,17 @@
     },
     "root": {
       "inputs": {
+        "dm": [
+          "std",
+          "dmerge"
+        ],
+        "flake-registry": "flake-registry",
         "home-manager": "home-manager",
         "nix-eval-jobs": "nix-eval-jobs",
-        "nixpkgs": "nixpkgs_2",
+        "nixos": "nixos",
+        "nixpkgs": [
+          "nixos"
+        ],
         "std": "std"
       }
     },

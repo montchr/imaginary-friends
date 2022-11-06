@@ -3,7 +3,7 @@
   cell,
 }: let
   inherit (inputs) nixpkgs dm;
-  pkgs' = nixpkgs.legacyPackages;
+  pkgs' = nixpkgs;
   l = nixpkgs.lib // builtins;
 in {
   incarnate = {
@@ -11,7 +11,7 @@ in {
     profiles ? [],
     recursiveProfiles ? config: [],
   }:
-    l.nixosSystem {
+    inputs.nixos.lib.nixosSystem {
       inherit system;
       modules = [cell.profiles.nix] ++ profiles;
     };

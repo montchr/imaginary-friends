@@ -1,10 +1,15 @@
 {
   description = "say hello to my invisible friends";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixos.url = "nixpkgs/nixos-unstable";
+  inputs.nixpkgs.follows = "nixos";
+
+  inputs.flake-registry.url = "github:NixOS/flake-registry";
+  inputs.flake-registry.flake = false;
 
   inputs.std.url = "github:divnix/std";
   inputs.std.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.dm.follows = "std/dmerge";
 
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -14,6 +19,7 @@
   outputs = inputs @ {
     self,
     std,
+    nixpkgs,
     ...
   }: let
     system = builtins.currentSystem or "aarch64-darwin";
@@ -32,13 +38,16 @@
         (data "nodes")
         (data "homes")
 
+        (data "compat")
+        (data "sources")
+
         (installables "packages")
 
         (devshells "devshells")
       ];
     } {
       devShells = std.harvest self ["_automation" "devshells"];
-      # lib = (std.harvest self ["lib" "lib"]).${system};
+      lib = (std.harvest self ["clusters" "lib"]).${system};
       nixosConfigurations = (std.harvest self ["clusters" "hosts"]).${system};
     };
 

@@ -3,12 +3,13 @@
   cell,
 }: let
   inherit (inputs) std;
+  inherit (inputs.nix-eval-jobs.packages) nix-eval-jobs;
   l = inputs.nixpkgs.lib // builtins;
   pkgs' = inputs.nixpkgs;
 in
   l.mapAttrs (_: std.lib.dev.mkShell) rec {
     ci = {
-      packages = [inputs.nej.packages.nix-eval-jobs];
+      packages = [nix-eval-jobs];
       env = [
         {
           name = "NIX_CONFIG";
