@@ -1,13 +1,51 @@
+# SPDX-FileCopyrightText: 2022 Chris Montgomery <chris@cdom.io>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {
   inputs,
   cell,
 }: let
-  inherit (inputs) std;
+  inherit (inputs) nixpkgs std;
   inherit (inputs.nix-eval-jobs.packages) nix-eval-jobs;
+  inherit (inputs.cells) presets;
   l = inputs.nixpkgs.lib // builtins;
-  pkgs' = inputs.nixpkgs;
+      name = "Your Imaginary Friends";
+  cats = cell.devshellCategories;
 in
-  l.mapAttrs (_: std.lib.dev.mkShell) rec {
+  l.mapAttrs (_: std.lib.dev.mkShell) {
+    default = {...}: {
+      inherit name;
+      nixago = [
+        (presets.nixago.commitlint {})
+        (presets.nixago.lefthook {})
+        (presets.nixago.prettier {})
+        (presets.nixago.treefmt {})
+
+        (presets.nixago.statix {
+          configData = {
+            disabled = ["useless_parens"];
+          };
+        })
+      ];
+      packages = [
+        nixpkgs.deadnix
+        nixpkgs.gh
+        nixpkgs.reuse
+        nixpkgs.statix
+        nixpkgs.treefmt
+      ];
+      commands = [
+        {
+          package = nixpkgs.reuse;
+          category = cats.legal;
+        }
+        {
+          package = nixpkgs.just;
+          category = cats.general;
+        }
+      ];
+      imports = [std.std.devshellProfiles.default];
+    };
     ci = {
       packages = [nix-eval-jobs];
       env = [
@@ -17,38 +55,4 @@ in
         }
       ];
     };
-    default = {...}: {
-      name = "Your Imaginary Friends";
-      imports = [std.std.devshellProfiles.default];
-      nixago = [
-        # (std.nixago.conform {configData = {inherit (inputs) cells;};})
-        # cell.nixago.treefmt
-        # cell.nixago.editorconfig
-        # cell.nixago.just
-        # std.nixago.lefthook
-        # std.nixago.adrgen
-      ];
-      commands =
-        [
-          {
-            package = pkgs'.reuse;
-            category = "legal";
-          }
-          {
-            package = pkgs'.alejandra;
-            category = "tools";
-          }
-          {
-            package = pkgs'.treefmt;
-            category = "tools";
-          }
-        ]
-        ++ l.optionals pkgs'.stdenv.isLinux [];
-    };
-
-    # checks = {...}: {
-    #   name = "checks";
-    #   imports = [std.devshellProfiles.default];
-    #   commands = [];
-    # };
   }

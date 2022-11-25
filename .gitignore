@@ -1,3 +1,75 @@
+# SPDX-FileCopyrightText: 2022 Chris Montgomery <chris@cdom.io>
+# SPDX-License-Identifier: CC0-1.0
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+##: nix
 .std
 /**/flake.lock
+
+##: build artifacts
+build
 result
+
+##: yarn/npm/etc.
+node_modules/
+.npm/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+##: php/composer/etc.
+.composer/
+vendor/
+
+##: private/local files
+*.local
+.env*.local
+*.pem
+
+##: cache/state files
+.eslintcache/
+.direnv/
+
+##: terraform
+*.tfstate*
+*.tfvars
+.terraform/
+
+##: testing
+/coverage
+
+##: virtual machine images
+*.qcow2
+*.img
+
+##: os clutter
+.DS_Store
+
+##: temporary files
+*.tmp
+tmp/
+
+##: javascript/typescript
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+
+##: next.js
+.next/
+next-env.d.ts
+out/
+.vercel
+
+
+# nixago: ignore-linked-files
+statix.toml
+.prettierrc.json
+lefthook.yml
+.commitlintrc.json
+treefmt.toml

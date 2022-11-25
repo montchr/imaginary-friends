@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: imaginary-friends
+Upstream-Contact: Chris Montgomery <chris@cdom.io>
+Source: https://github.com/montchr/imaginary-friends
+
+Files: .vscode/*
+       .yarn/*
+       *.json
+       *.lock
+Copyright: 2022 Chris Montgomery <chris@cdom.io>
+License: CC0-1.0

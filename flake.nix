@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2022 Chris Montgomery <chris@cdom.io>
+# SPDX-License-Identifier: GPL-3.0-or-later
 {
   description = "say hello to my invisible friends";
 
@@ -8,8 +10,9 @@
   inputs.flake-registry.flake = false;
 
   inputs.std.url = "github:divnix/std";
+  inputs.std.inputs.mdbook-kroki-preprocessor.follows = "std/blank";
   inputs.std.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.dm.follows = "std/dmerge";
+  inputs.dmerge.follows = "std/dmerge";
 
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -20,52 +23,66 @@
   inputs.nix-eval-jobs.url = "github:nix-community/nix-eval-jobs/v2.11.0";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
-  outputs = inputs @ {
-    self,
+  outputs = {
     std,
-    nixpkgs,
+    self,
     ...
-  }: let
+  } @ inputs: let
+    inherit (std) blockTypes growOn harvest;
     system = builtins.currentSystem or "aarch64-darwin";
   in
-    std.growOn {
+    growOn {
       inherit inputs;
-      systems = ["aarch64-darwin" "aarch64-linux"];
       cellsFrom = ./cells;
-      cellBlocks = with std.blockTypes; [
-        (functions "lib")
+      cellBlocks = [
 
-        (data "profiles")
-        (data "modules")
+        (blockTypes.data "profiles")
+        (blockTypes.data "modules")
 
-        (data "hosts")
-        (data "nodes")
-        (data "homes")
+        (blockTypes.data "hosts")
+        (blockTypes.data "nodes")
+        (blockTypes.data "homes")
 
-        (data "compat")
-        (data "sources")
+        (blockTypes.data "compat")
+        (blockTypes.data "sources")
 
-        (installables "packages")
+        (blockTypes.functions "lib")
 
-        (devshells "devshells")
+        ##: --- public ---
+
+        #: lib
+        (blockTypes.functions "functions")
+        (blockTypes.nixago "nixago")
+        (blockTypes.installables "packages")
+
+        #: presets
+        (blockTypes.nixago "nixago")
+
+        ##: --- internal ---
+
+        #: _automation
+        (blockTypes.devshells "devshells")
+        (blockTypes.data "devshellCategories")
+        (blockTypes.nixago "nixago")
       ];
-    } {
-      devShells = std.harvest self ["_automation" "devshells"];
+    }
+    {
+      devShells = harvest self ["_automation" "devshells"];
       lib = (std.harvest self ["clusters" "lib"]).${system};
       nixosConfigurations = (std.harvest self ["clusters" "hosts"]).${system};
+      packages = harvest self [["_automation" "packages"]];
     };
 
   nixConfig = {
     # post-build-hook = ./comb/ops/upload-to-cache.sh;
     allow-import-from-derivation = false;
+    extra-experimental-features = "nix-command flakes";
     extra-substituters = [
       "https://dotfield.cachix.org"
-      "https://iosevka-xtal.cachix.org"
       "https://nix-community.cachix.org"
     ];
     extra-trusted-public-keys = [
       "dotfield.cachix.org-1:b5H/ucY/9PDARWG9uWA87ZKWUBU+hnfF30amwiXiaNk="
-      "iosevka-xtal.cachix.org-1:5d7Is01fs3imwU9w5dom2PcSskJNwtJGbfjRxunuOcw="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
