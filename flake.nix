@@ -34,15 +34,14 @@
       inherit inputs;
       cellsFrom = ./cells;
       cellBlocks = [
-        (blockTypes.data "profiles")
-        (blockTypes.data "modules")
+        (blockTypes.functions "profiles")
+        (blockTypes.functions "modules")
 
-        (blockTypes.data "hosts")
-        (blockTypes.data "nodes")
-        (blockTypes.data "homes")
+        (blockTypes.functions "hosts")
+        (blockTypes.functions "nodes")
+        (blockTypes.functions "homes")
 
-        (blockTypes.data "compat")
-        (blockTypes.data "sources")
+        (blockTypes.functions "compat")
 
         (blockTypes.functions "lib")
 
