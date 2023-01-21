@@ -5,7 +5,7 @@
   inputs,
   cell,
 }: let
-  l = inputs.nixpkgs.lib // builtins;
+  # l = inputs.nixpkgs.lib // builtins;
   inherit (inputs.cells.clusters) hosts;
 in {
   generate-base-ami = inputs.nixos-generators.nixosGenerate {

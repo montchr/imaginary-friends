@@ -12,7 +12,6 @@
   ...
 }: let
   # bootDevice = "/dev/disk/by-label/boot";
-  bootDevice = "/dev/disk/by-label/boot";
   subvol = name: {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";

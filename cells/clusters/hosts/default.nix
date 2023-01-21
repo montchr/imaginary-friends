@@ -5,7 +5,6 @@
   inputs,
   cell,
 }: let
-  inherit (inputs) cells;
   inherit (cell) lib;
 in {
   freundix = lib.incarnate {

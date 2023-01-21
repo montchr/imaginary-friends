@@ -12,7 +12,6 @@ in {
   incarnate = {
     system ? pkgs'.system,
     profiles ? [],
-    recursiveProfiles ? config: [],
   }:
     inputs.nixos.lib.nixosSystem {
       inherit system;
