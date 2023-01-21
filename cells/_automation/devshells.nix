@@ -7,7 +7,7 @@
 }: let
   inherit (inputs) nixpkgs std;
   inherit (inputs.nix-eval-jobs.packages) nix-eval-jobs;
-  inherit (inputs.cells) lib presets;
+  inherit (inputs.cells) presets;
   l = inputs.nixpkgs.lib // builtins;
   name = "Your Imaginary Friends";
   cats = cell.devshellCategories;
@@ -16,13 +16,7 @@ in
     default = {...}: {
       inherit name;
       nixago = [
-        (lib.nixago.garnix {
-          configData = {
-            builds.include = [
-              "*.x86_64-linux.*"
-            ];
-          };
-        })
+        cell.nixago.garnix
 
         (presets.nixago.commitlint {})
         (presets.nixago.lefthook {})
