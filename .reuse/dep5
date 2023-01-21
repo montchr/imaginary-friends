@@ -7,5 +7,8 @@ Files: .vscode/*
        .yarn/*
        *.json
        *.lock
+       *.toml
+       *.yaml
+       *.yml
 Copyright: 2022-2023 Chris Montgomery <chris@cdom.io>
 License: CC0-1.0
