@@ -1,7 +1,6 @@
-# SPDX-FileCopyrightText: 2022 Chris Montgomery <chris@cdom.io>
+# SPDX-FileCopyrightText: 2022-2023 Chris Montgomery <chris@cdom.io>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-
 {
   inputs,
   cell,
@@ -10,7 +9,7 @@
   inherit (inputs.nix-eval-jobs.packages) nix-eval-jobs;
   inherit (inputs.cells) presets;
   l = inputs.nixpkgs.lib // builtins;
-      name = "Your Imaginary Friends";
+  name = "Your Imaginary Friends";
   cats = cell.devshellCategories;
 in
   l.mapAttrs (_: std.lib.dev.mkShell) {

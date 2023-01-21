@@ -1,9 +1,8 @@
 # SPDX-FileCopyrightText: 2003-2022 Eelco Dolstra and the Nixpkgs/NixOS contributors
-# SPDX-FileCopyrightText: 2022 Chris Montgomery <chris@cdom.io>
+# SPDX-FileCopyrightText: 2022-2023 Chris Montgomery <chris@cdom.io>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 # SPDX-License-Identifier: GPL-3.0-or-later OR MIT
-
 {
   lib,
   buildNpmPackage,

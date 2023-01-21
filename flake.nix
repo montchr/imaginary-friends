@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Chris Montgomery <chris@cdom.io>
+# SPDX-FileCopyrightText: 2022-2023 Chris Montgomery <chris@cdom.io>
 # SPDX-License-Identifier: GPL-3.0-or-later
 {
   description = "say hello to my invisible friends";
@@ -10,7 +10,6 @@
   inputs.flake-registry.flake = false;
 
   inputs.std.url = "github:divnix/std";
-  inputs.std.inputs.mdbook-kroki-preprocessor.follows = "std/blank";
   inputs.std.inputs.nixpkgs.follows = "nixpkgs";
   inputs.dmerge.follows = "std/dmerge";
 
@@ -35,7 +34,6 @@
       inherit inputs;
       cellsFrom = ./cells;
       cellBlocks = [
-
         (blockTypes.data "profiles")
         (blockTypes.data "modules")
 
