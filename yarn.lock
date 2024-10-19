@@ -4,8 +4,8 @@
 __metadata:
   version: 6
 
-"nix-flake-template@workspace:.":
+"imaginary-friends@workspace:.":
   version: 0.0.0-use.local
-  resolution: "nix-flake-template@workspace:."
+  resolution: "imaginary-friends@workspace:."
   languageName: unknown
   linkType: soft
